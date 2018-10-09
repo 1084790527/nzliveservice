@@ -1,30 +1,30 @@
 package com.example.nzliveservice.bean;
 
 public class UserLogin {
-    private String num;
-    private String pwd;
-
-    public String getNum() {
-        return num;
-    }
-
-    public void setNum(String num) {
-        this.num = num;
-    }
-
-    public String getPwd() {
-        return pwd;
-    }
-
-    public void setPwd(String pwd) {
-        this.pwd = pwd;
-    }
+    private String username;
+    private String userpwd;
 
     @Override
     public String toString() {
         return "UserLogin{" +
-                "num='" + num + '\'' +
-                ", pwd='" + pwd + '\'' +
+                "username='" + username + '\'' +
+                ", userpwd='" + userpwd + '\'' +
                 '}';
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getUserpwd() {
+        return userpwd;
+    }
+
+    public void setUserpwd(String userpwd) {
+        this.userpwd = userpwd;
     }
 }
