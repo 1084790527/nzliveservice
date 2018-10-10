@@ -1,7 +1,9 @@
 package com.example.nzliveservice.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.example.nzliveservice.bean.LoginUser;
 import com.example.nzliveservice.bean.Student;
+import com.example.nzliveservice.bean.Teacher;
 import com.example.nzliveservice.dao.UserLoginDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -19,28 +21,35 @@ public class LoginController {
 
     /**
      * 登入接口
-     * @param student
+     * @param loginUser
      * @return
      */
     @RequestMapping(value = "login")
     @ResponseBody
-    private JSONObject login(@RequestBody Student student){
-        System.out.println(student.toString());
+    private JSONObject login(@RequestBody LoginUser loginUser){
+        System.out.println(loginUser.toString());
         JSONObject jsonObject=new JSONObject();
-
-        Student user=userLoginDao.getUserLogin(student.getUserid());
+//        System.out.println("AAA:"+student.getUserid().length());
+        if (loginUser.getUserid().length()==6){
+            Teacher user=userLoginDao.getUserTeacherLogin(loginUser.getUserid());
+        }
+        Student user=userLoginDao.getUserStudentLogin(loginUser.getUserid());
         if (user==null){
             //账号不存在
             jsonObject.put("status","0");
             return  jsonObject;
-        }else if (!user.getUserpwd().equals(student.getUserpwd())){
+        }else if (!user.getUserpwd().equals(loginUser.getUserpwd())){
             //密码错误
             jsonObject.put("status","1");
             return  jsonObject;
         }else {
             //账号密码正确
             jsonObject.put("status","2");
-            System.out.println(student.toString());
+            jsonObject.put("userid",user.getUserid());
+            jsonObject.put("dormroom",user.getDormroom());
+            jsonObject.put("username",user.getUsername());
+            jsonObject.put("userpwd",user.getUserpwd());
+            System.out.println(loginUser.toString());
             System.out.println(""+user.toString());
             return jsonObject;
         }
