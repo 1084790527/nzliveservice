@@ -19,28 +19,28 @@ public class LoginController {
 
     /**
      * 登入接口
-     * @param userLogin
+     * @param student
      * @return
      */
     @RequestMapping(value = "login")
     @ResponseBody
-    private JSONObject login(@RequestBody Student userLogin){
-        System.out.println(userLogin.toString());
+    private JSONObject login(@RequestBody Student student){
+        System.out.println(student.toString());
         JSONObject jsonObject=new JSONObject();
 
-        Student user=userLoginDao.getUserLogin(userLogin.getUserid());
+        Student user=userLoginDao.getUserLogin(student.getUserid());
         if (user==null){
             //账号不存在
             jsonObject.put("status","0");
             return  jsonObject;
-        }else if (!user.getUserpwd().equals(userLogin.getUserpwd())){
+        }else if (!user.getUserpwd().equals(student.getUserpwd())){
             //密码错误
             jsonObject.put("status","1");
             return  jsonObject;
         }else {
             //账号密码正确
             jsonObject.put("status","2");
-            System.out.println(userLogin.toString());
+            System.out.println(student.toString());
             System.out.println(""+user.toString());
             return jsonObject;
         }
