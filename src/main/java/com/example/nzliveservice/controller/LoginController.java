@@ -1,7 +1,7 @@
 package com.example.nzliveservice.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.example.nzliveservice.bean.UserLogin;
+import com.example.nzliveservice.bean.Student;
 import com.example.nzliveservice.dao.UserLoginDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -24,11 +24,11 @@ public class LoginController {
      */
     @RequestMapping(value = "login")
     @ResponseBody
-    private JSONObject login(@RequestBody UserLogin userLogin){
-
+    private JSONObject login(@RequestBody Student userLogin){
+        System.out.println(userLogin.toString());
         JSONObject jsonObject=new JSONObject();
 
-        UserLogin user=userLoginDao.getUserLogin(userLogin.getUsername());
+        Student user=userLoginDao.getUserLogin(userLogin.getUserid());
         if (user==null){
             //账号不存在
             jsonObject.put("status","0");
