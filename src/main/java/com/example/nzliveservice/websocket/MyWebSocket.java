@@ -1,5 +1,6 @@
 package com.example.nzliveservice.websocket;
 
+import com.alibaba.fastjson.JSONObject;
 import org.springframework.stereotype.Component;
 
 import javax.websocket.*;
@@ -20,6 +21,8 @@ public class MyWebSocket {
     //与某个客户端的连接会话，需要通过它来给客户端发送数据
     private Session session;
 
+    private String userid;
+
     /**
      * 连接建立成功调用的方法
      * @param session
@@ -30,6 +33,7 @@ public class MyWebSocket {
         webSocketSet.add(this);          //加入set中
         addOnlineCount();                 //在线数加1
         System.out.println("有新连接加入！当前在线人数为" + getOnlineCount());
+
         try {
             sendMessage("连接成功");
         } catch (IOException e) {
@@ -56,7 +60,15 @@ public class MyWebSocket {
     @OnMessage
     public void onMessage(String message, Session session){
         System.out.println("来自客户端的消息:" + message);
-        sendInfo(message);
+//        sendInfo(message);
+        JSONObject jsonObject=JSONObject.parseObject(message);
+        String type=jsonObject.getString("type");
+        switch (type){
+            case "userid":
+                userid=jsonObject.getString("userid");
+                System.out.println("新用户进入："+userid);
+                break;
+        }
     }
 
     /**
