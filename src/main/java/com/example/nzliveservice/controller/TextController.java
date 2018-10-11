@@ -23,12 +23,17 @@ public class TextController {
 
     @RequestMapping(value = "textjson")
     @ResponseBody
-        public String textjson(@RequestBody JSONObject json){
+    public String textjson(@RequestBody JSONObject json){
 //        System.out.println("asdasd:"+a+b);
-            System.out.println(json.toString());
-            JSONObject jsonObject=new JSONObject();
-            jsonObject.put("1","q");
-            jsonObject.put("2","w");
-        return jsonObject.toString();
+        System.out.println(json.toString());
+        JSONObject jsonObject=new JSONObject();
+        jsonObject.put("1","q");
+        jsonObject.put("2","w");
+    return jsonObject.toString();
+    }
+
+    @RequestMapping(value = "textwebsocket")
+    public String textwebsocket(){
+        return "textwebsocket";
     }
 }
