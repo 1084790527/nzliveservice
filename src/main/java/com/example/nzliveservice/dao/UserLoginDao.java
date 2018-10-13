@@ -6,6 +6,8 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
+import java.util.List;
+
 @Mapper
 public interface UserLoginDao {
 
@@ -17,6 +19,9 @@ public interface UserLoginDao {
     @Select("select * from student where userid=#{userid}")
     Student getUserStudentLogin(@Param("userid") String userid);
 
-    @Select("select * from Teacher where userid=#{userid}")
+    @Select("select * from teacher where userid=#{userid}")
     Teacher getUserTeacherLogin(@Param("userid") String userid);
+
+    @Select("select * from student")
+    List<Student> getObtainDataStdent();
 }
