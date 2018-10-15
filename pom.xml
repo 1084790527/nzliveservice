@@ -84,6 +84,14 @@
 			<artifactId>spring-boot-starter-websocket</artifactId>
 			<version>2.0.5.RELEASE</version>
 		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/uk.gov.gchq.gaffer/bitmap-library -->
+		<dependency>
+			<groupId>uk.gov.gchq.gaffer</groupId>
+			<artifactId>bitmap-library</artifactId>
+			<version>1.7.0</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
