@@ -4,13 +4,15 @@ import java.util.Arrays;
 
 public class NameRecord {
     private String userid;
-    private String imagebyte;
+    private String data;
+    private String url;
 
     @Override
     public String toString() {
         return "NameRecord{" +
                 "userid='" + userid + '\'' +
-                ", imagebyte='" + imagebyte + '\'' +
+                ", data='" + data + '\'' +
+                ", url='" + url + '\'' +
                 '}';
     }
 
@@ -22,11 +24,19 @@ public class NameRecord {
         this.userid = userid;
     }
 
-    public String getImagebyte() {
-        return imagebyte;
+    public String getData() {
+        return data;
     }
 
-    public void setImagebyte(String imagebyte) {
-        this.imagebyte = imagebyte;
+    public void setData(String data) {
+        this.data = data;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }

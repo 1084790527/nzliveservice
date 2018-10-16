@@ -2,6 +2,7 @@ package com.example.nzliveservice.dao;
 
 import com.example.nzliveservice.bean.Student;
 import com.example.nzliveservice.bean.Teacher;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -24,4 +25,7 @@ public interface UserLoginDao {
 
     @Select("select * from student")
     List<Student> getObtainDataStdent();
+
+    @Insert("INSERT INTO namerecord (userid, data, url) VALUES (#{userid}, #{data}, #{url})")
+    void setNameRecord(@Param("userid") String userid,@Param("data") String data,@Param("url") String url);
 }

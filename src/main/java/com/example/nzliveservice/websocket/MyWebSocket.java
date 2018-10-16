@@ -34,12 +34,12 @@ public class MyWebSocket {
         addOnlineCount();                 //在线数加1
         System.out.println("有新连接加入！当前在线人数为" + getOnlineCount());
 
-        try {
-            sendMessage("连接成功");
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("IO异常");
-        }
+//        try {
+//            sendMessage("连接成功");
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            System.out.println("IO异常");
+//        }
     }
 
     /**
@@ -67,6 +67,12 @@ public class MyWebSocket {
             case "userid":
                 userid=jsonObject.getString("userid");
                 System.out.println("新用户进入："+userid);
+                break;
+            case "checkTheBed":
+                System.out.println("查寝");
+                JSONObject object=new JSONObject();
+                object.put("type","checkTheBed");
+                sendInfo(object.toString());
                 break;
         }
     }

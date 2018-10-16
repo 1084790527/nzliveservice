@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>text1</title>
+</head>
+<body>
+加法：<input type="text" name="jf">+<input type="text" name="jf"><button type="button" onclick="jf()">等于</button><br/>
+减法：<input type="text" name="jif">-<input type="text" name="jif"><button type="button" onclick="jif()">等于</button><br/>
+乘法：<input type="text" name="cf">*<input type="text" name="cf"><button type="button" onclick="cf()">等于</button><br/>
+除法：<input type="text" name="cuf">/<input type="text" name="cuf"><button type="button" onclick="cuf()">等于</button>
+
+</body>
+<script type="application/javascript">
+    function jf(){
+        var t1=document.getElementsByName("jf").item(0).value;
+        var t2=document.getElementsByName("jf").item(1).value;
+        alert(Number(t1)+Number(t2));
+    }
+    function jif() {
+        var t1=document.getElementsByName("jif").item(0).value;
+        var t2=document.getElementsByName("jif").item(1).value;
+        alert(Number(t1)-Number(t2));
+    }
+    function cf() {
+        var t1=document.getElementsByName("cf").item(0).value;
+        var t2=document.getElementsByName("cf").item(1).value;
+        alert(Number(t1)*Number(t2));
+    }
+    function cuf() {
+        var t1=document.getElementsByName("cuf").item(0).value;
+        var t2=document.getElementsByName("cuf").item(1).value;
+        alert(Number(t1)/Number(t2));
+    }
+</script>
+</html>

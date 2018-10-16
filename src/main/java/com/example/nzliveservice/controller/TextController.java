@@ -36,4 +36,9 @@ public class TextController {
     public String textwebsocket(){
         return "textwebsocket";
     }
+
+    @RequestMapping(value = "text1")
+    public String text1(){
+        return "text1";
+    }
 }
