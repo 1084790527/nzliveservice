@@ -113,6 +113,24 @@ public class MyWebSocket {
         }
     }
 
+    /**
+     * 对个人发消息
+     * @param userid
+     * @param message
+     */
+    public static void sendToOne(String userid,String message){
+        for (MyWebSocket item : webSocketSet){
+            try {
+                if (userid.equals(item.userid)){
+                    item.sendMessage(message);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+                continue;
+            }
+        }
+    }
+
     public static synchronized int getOnlineCount() {
         return onlineCount;
     }
