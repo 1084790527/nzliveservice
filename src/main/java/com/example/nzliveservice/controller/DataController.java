@@ -61,7 +61,7 @@ public class DataController {
 
 
     /**
-     *
+     * 获取及时点名文件接口
      * @param request
      * @return 0:上传成功 1:上传失败 2:文件是空的 3:保存数据库失败
      */
@@ -103,6 +103,7 @@ public class DataController {
             Util.mkdirPath(obtainDataStdentUrl+fileData+"/"+fileYear+"/"+fileSystem+"/"+fileClass+"/");
 //            System.out.println(fileClass);
             url=obtainDataStdentUrl+fileData+"/"+fileYear+"/"+fileSystem+"/"+fileClass+"/";
+
 
 
             if (!file.isEmpty()){
