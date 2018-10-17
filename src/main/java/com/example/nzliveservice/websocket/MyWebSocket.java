@@ -1,11 +1,15 @@
 package com.example.nzliveservice.websocket;
 
 import com.alibaba.fastjson.JSONObject;
+import com.example.nzliveservice.bean.Student;
+import com.example.nzliveservice.dao.UserLoginDao;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
+import java.util.List;
 import java.util.concurrent.CopyOnWriteArraySet;
 
 @ServerEndpoint(value = "/websocket")
@@ -70,9 +74,23 @@ public class MyWebSocket {
                 break;
             case "checkTheBed":
                 System.out.println("查寝");
-                JSONObject object=new JSONObject();
-                object.put("type","checkTheBed");
-                sendInfo(object.toString());
+                jsonObject=new JSONObject();
+                jsonObject.put("type","checkTheBed");
+//                sendInfo(jsonObject.toString());
+                for (MyWebSocket socket:webSocketSet){
+                    String userid=socket.userid;
+                    if ("201604".equals(userid.substring(0,6))){
+                        sendToOne(userid,jsonObject.toString());
+                    }
+                }
+                break;
+            case "returnCheckTheBed":
+                String data=jsonObject.getString("data");
+                jsonObject = new JSONObject();
+                jsonObject.put("type","returnCheckTheBed");
+                jsonObject.put("data",data);
+                jsonObject.put("userid",this.userid);
+                sendToOne("111111",jsonObject.toString());
                 break;
         }
     }

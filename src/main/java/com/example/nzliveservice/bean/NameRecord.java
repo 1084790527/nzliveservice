@@ -1,8 +1,8 @@
 package com.example.nzliveservice.bean;
 
-import java.util.Arrays;
 
 public class NameRecord {
+    private String serianumber;
     private String userid;
     private String data;
     private String url;
@@ -10,10 +10,19 @@ public class NameRecord {
     @Override
     public String toString() {
         return "NameRecord{" +
-                "userid='" + userid + '\'' +
+                "serianumber='" + serianumber + '\'' +
+                ", userid='" + userid + '\'' +
                 ", data='" + data + '\'' +
                 ", url='" + url + '\'' +
                 '}';
+    }
+
+    public String getSerianumber() {
+        return serianumber;
+    }
+
+    public void setSerianumber(String serianumber) {
+        this.serianumber = serianumber;
     }
 
     public String getUserid() {

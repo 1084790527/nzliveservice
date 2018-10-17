@@ -3,6 +3,7 @@ package com.example.nzliveservice.controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.example.nzliveservice.bean.ImageStream;
 import com.example.nzliveservice.bean.LoginUser;
 import com.example.nzliveservice.bean.NameRecord;
 import com.example.nzliveservice.bean.Student;
@@ -10,7 +11,11 @@ import com.example.nzliveservice.dao.UserLoginDao;
 import com.example.nzliveservice.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpRequest;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +29,7 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -141,6 +147,40 @@ public class DataController {
         }
         jsonObject.put("status","0");
         return jsonObject;
+    }
+
+
+    @RequestMapping(value = "getImageStream")
+    public ResponseEntity<FileSystemResource> getImageStream(@RequestBody ImageStream imageStream){
+        System.out.println(imageStream.toString());
+        String status=imageStream.getStatus();
+        String yy=status.substring(0,2);
+        String mm=status.substring(3,5);
+        String ss=status.substring(6,8);
+        String fileName=imageStream.getData()+yy+mm+ss+imageStream.getUserid()+".jpg";
+
+        String userid=imageStream.getUserid();
+        String fileUrl=obtainDataStdentUrl+imageStream.getData()+"/"+userid.substring(0,4)+"/"+userid.substring(4,6)+"/"+userid.substring(6,8)+"/";
+
+        File file=new File(fileUrl+fileName);
+        if (file==null){
+            System.out.println("文件不存在！");
+        }
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
+        headers.add("Content-Disposition", "attachment; filename=" + System.currentTimeMillis() + ".jpg");
+        headers.add("Pragma", "no-cache");
+        headers.add("Expires", "0");
+        headers.add("Last-Modified", new Date().toString());
+        headers.add("ETag", String.valueOf(System.currentTimeMillis()));
+
+        return ResponseEntity
+                .ok()
+                .headers(headers)
+                .contentLength(file.length())
+                .contentType(MediaType.parseMediaType("application/octet-stream"))
+                .body(new FileSystemResource(file));
+//        return null;
     }
 
 }
