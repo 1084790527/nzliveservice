@@ -1,5 +1,6 @@
 package com.example.nzliveservice.dao;
 
+import com.example.nzliveservice.bean.NameRecord;
 import com.example.nzliveservice.bean.Student;
 import com.example.nzliveservice.bean.Teacher;
 import org.apache.ibatis.annotations.Insert;
@@ -10,7 +11,7 @@ import org.apache.ibatis.annotations.Select;
 import java.util.List;
 
 @Mapper
-public interface UserLoginDao {
+public interface UserDataDao {
 
     /**
      * 学生查询登入账号密码
@@ -43,4 +44,10 @@ public interface UserLoginDao {
      */
     @Insert("INSERT INTO namerecord (userid, data, url) VALUES (#{userid}, #{data}, #{url})")
     void setNameRecord(@Param("userid") String userid,@Param("data") String data,@Param("url") String url);
+
+    /**
+     * 个人点名记录
+     */
+    @Select("select * from namerecord where userid=#{userid}")
+    List<NameRecord> getNamerecordToOne(@Param("userid") String userid);
 }

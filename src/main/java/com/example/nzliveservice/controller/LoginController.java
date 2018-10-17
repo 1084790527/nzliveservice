@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.example.nzliveservice.bean.LoginUser;
 import com.example.nzliveservice.bean.Student;
 import com.example.nzliveservice.bean.Teacher;
-import com.example.nzliveservice.dao.UserLoginDao;
+import com.example.nzliveservice.dao.UserDataDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.stereotype.Controller;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class LoginController {
 
     @Autowired
-    UserLoginDao userLoginDao;
+    UserDataDao userDataDao;
 
     /**
      * 登入接口
@@ -31,7 +31,7 @@ public class LoginController {
         JSONObject jsonObject=new JSONObject();
 //        System.out.println("AAA:"+student.getUserid().length());
         if (loginUser.getUserid().length()==6){
-            Teacher user=userLoginDao.getUserTeacherLogin(loginUser.getUserid());
+            Teacher user= userDataDao.getUserTeacherLogin(loginUser.getUserid());
             if (user==null){
                 //账号不存在
                 jsonObject.put("status","0");
@@ -52,7 +52,7 @@ public class LoginController {
                 return jsonObject;
             }
         }else {
-            Student user=userLoginDao.getUserStudentLogin(loginUser.getUserid());
+            Student user= userDataDao.getUserStudentLogin(loginUser.getUserid());
             if (user==null){
                 //账号不存在
                 jsonObject.put("status","0");

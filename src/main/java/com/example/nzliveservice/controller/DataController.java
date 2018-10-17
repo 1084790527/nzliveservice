@@ -1,25 +1,22 @@
 package com.example.nzliveservice.controller;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.example.nzliveservice.bean.ImageStream;
 import com.example.nzliveservice.bean.LoginUser;
 import com.example.nzliveservice.bean.NameRecord;
 import com.example.nzliveservice.bean.Student;
-import com.example.nzliveservice.dao.UserLoginDao;
+import com.example.nzliveservice.dao.UserDataDao;
 import com.example.nzliveservice.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpRequest;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -36,7 +33,7 @@ import java.util.List;
 public class DataController {
 
     @Autowired
-    UserLoginDao userLoginDao;
+    UserDataDao userDataDao;
 
 //    @Value("${text1}") private String text1;
 
@@ -52,7 +49,7 @@ public class DataController {
 
         JSONArray jsonArray=new JSONArray();
 
-        List<Student> students=userLoginDao.getObtainDataStdent();
+        List<Student> students= userDataDao.getObtainDataStdent();
         for (Student student:students){
 //            System.out.println(student.toString());
             JSONObject jsonObject=new JSONObject();
@@ -136,7 +133,7 @@ public class DataController {
             System.out.println("上传成功");
 
             try {
-                userLoginDao.setNameRecord(userid,fileData,url+fileName);
+                userDataDao.setNameRecord(userid,fileData,url+fileName);
                 System.out.println("保存数据库成功");
             }catch (Exception e){
                 e.printStackTrace();
@@ -183,4 +180,34 @@ public class DataController {
 //        return null;
     }
 
+    /**
+     * 个人点名记录
+     * @return
+     */
+    @RequestMapping(value = "getNamerecordToOne")
+    @ResponseBody
+    public JSONArray getNamerecordToOne(@RequestBody JSONObject jsonObject){
+        System.out.println(jsonObject.toString());
+
+        List<NameRecord> mList= userDataDao.getNamerecordToOne(jsonObject.getString("userid")+"");
+//        for (NameRecord nameRecord:mList){
+//            System.out.println(nameRecord.toString());
+//        }
+        JSONArray jsonArray=new JSONArray();
+        for (NameRecord nameRecord:mList){
+            String url = nameRecord.getUrl();
+            String[] strings=url.split("/");
+            String data=strings[strings.length-1];
+            String date=data.substring(0,8);
+            String time=data.substring(8,14);
+            String hh=time.substring(0,2);
+            String MM=time.substring(2,4);
+            String ss=time.substring(4,6);
+            JSONObject object=new JSONObject();
+            object.put("date",date);
+            object.put("time",hh+":"+MM+":"+ss);
+            jsonArray.add(object);
+        }
+        return jsonArray;
+    }
 }
