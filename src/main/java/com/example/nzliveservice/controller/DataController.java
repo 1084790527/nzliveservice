@@ -2,10 +2,7 @@ package com.example.nzliveservice.controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.example.nzliveservice.bean.ImageStream;
-import com.example.nzliveservice.bean.LoginUser;
-import com.example.nzliveservice.bean.NameRecord;
-import com.example.nzliveservice.bean.Student;
+import com.example.nzliveservice.bean.*;
 import com.example.nzliveservice.dao.UserDataDao;
 import com.example.nzliveservice.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -209,5 +206,43 @@ public class DataController {
             jsonArray.add(object);
         }
         return jsonArray;
+    }
+
+    /**
+     * 上传教师点名记录
+     * @param initiateNameRecord
+     * @return 0:上传成功 1,数据库错误
+     */
+    @RequestMapping(value = "setInitiateNameRecord")
+    @ResponseBody
+    public JSONObject setInitiateNameRecord(@RequestBody InitiateNameRecord initiateNameRecord){
+        System.out.println(initiateNameRecord.toString());
+
+        JSONObject jsonObject=new JSONObject();
+
+        try {
+            userDataDao.setInitiateNameRecord(initiateNameRecord.getUserid(),initiateNameRecord.getDate(),initiateNameRecord.getTime());
+            jsonObject.put("status","0");
+            return jsonObject;
+        }catch (Exception e){
+            jsonObject.put("status","1");
+            return jsonObject;
+        }
+    }
+
+    @RequestMapping(value = "getInitiateNameRecord")
+    @ResponseBody
+    public JSONArray getInitiateNameRecord(@RequestBody JSONObject jsonObject){
+        System.out.println(jsonObject.toString());
+        String userid=jsonObject.getString("userid");
+        List<InitiateNameRecord> mList=userDataDao.getInitiateNameRecord(userid);
+        JSONArray mJsonArray=new JSONArray();
+        for (InitiateNameRecord record:mList){
+            JSONObject object=new JSONObject();
+            object.put("date",record.getDate());
+            object.put("time",record.getTime());
+            mJsonArray.add(object);
+        }
+        return mJsonArray;
     }
 }

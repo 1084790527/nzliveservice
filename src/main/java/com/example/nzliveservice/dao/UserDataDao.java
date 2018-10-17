@@ -1,5 +1,6 @@
 package com.example.nzliveservice.dao;
 
+import com.example.nzliveservice.bean.InitiateNameRecord;
 import com.example.nzliveservice.bean.NameRecord;
 import com.example.nzliveservice.bean.Student;
 import com.example.nzliveservice.bean.Teacher;
@@ -50,4 +51,21 @@ public interface UserDataDao {
      */
     @Select("select * from namerecord where userid=#{userid}")
     List<NameRecord> getNamerecordToOne(@Param("userid") String userid);
+
+    /**
+     * 教师发起点名记录
+     * @param userid
+     * @param date
+     * @param time
+     */
+    @Insert("INSERT INTO initiatenamerecord (userid, date, time) VALUES (#{userid}, #{date}, #{time})")
+    void setInitiateNameRecord(@Param("userid") String userid,@Param("date") String date,@Param("time") String time);
+
+    /**
+     * 查询教师点名记录
+     * @param userid
+     * @return
+     */
+    @Select("select * from initiatenamerecord where userid=#{userid}")
+    List<InitiateNameRecord> getInitiateNameRecord(@Param("userid") String userid);
 }
