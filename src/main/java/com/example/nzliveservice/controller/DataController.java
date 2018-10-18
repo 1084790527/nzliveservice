@@ -1,5 +1,6 @@
 package com.example.nzliveservice.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.example.nzliveservice.bean.*;
@@ -244,5 +245,25 @@ public class DataController {
             mJsonArray.add(object);
         }
         return mJsonArray;
+    }
+
+    /**
+     * 新增报修记录
+     * @param repair
+     * @return 0:提交成功 1:提交失败
+     */
+    @RequestMapping(value = "setRepairData")
+    @ResponseBody
+    public JSONObject setRepairData(@RequestBody Repair repair){
+        System.out.println(repair.toString());
+        JSONObject object=new JSONObject();
+        try {
+            userDataDao.setRepairData(repair.getUserid(),repair.getUsername(),repair.getDormroom(),repair.getNum(),repair.getData(),repair.getDate(),repair.getSchedule());
+            object.put("status",0);
+        }catch (Exception e){
+            e.printStackTrace();
+            object.put("status",1);
+        }
+        return object;
     }
 }

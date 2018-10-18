@@ -68,4 +68,17 @@ public interface UserDataDao {
      */
     @Select("select * from initiatenamerecord where userid=#{userid}")
     List<InitiateNameRecord> getInitiateNameRecord(@Param("userid") String userid);
+
+    /**
+     * 插入报修记录
+     * @param userid
+     * @param username
+     * @param dormroom
+     * @param num
+     * @param data
+     * @param date
+     * @param schedule
+     */
+    @Insert("insert into repair (userid,username,dormroom,num,data,date,schedule) values (#{userid},#{username},#{dormroom},#{num},#{data},#{date},#{schedule})")
+    void setRepairData(@Param("userid") String userid,@Param("username") String username,@Param("dormroom") String dormroom,@Param("num") String num,@Param("data") String data,@Param("date") String date,@Param("schedule") int schedule);
 }
