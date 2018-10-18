@@ -1,11 +1,14 @@
 package com.example.nzliveservice.websocket;
 
 import com.alibaba.fastjson.JSONObject;
+import com.example.nzliveservice.bean.NameRecord;
 import org.springframework.stereotype.Component;
 
 import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.CopyOnWriteArraySet;
 
 @ServerEndpoint(value = "/websocket")
@@ -23,6 +26,21 @@ public class MyWebSocket {
 
     private String userid;
 
+    private int OldHeartbeatDetection=11,NewHeartbeatDetection=12;
+
+    Timer timer=new Timer();
+    TimerTask timerTask=new TimerTask() {
+        @Override
+        public void run() {
+//            System.out.println("run");
+            if (OldHeartbeatDetection==NewHeartbeatDetection){
+                webSocketSet.remove(this);
+            }else {
+                OldHeartbeatDetection=NewHeartbeatDetection;
+            }
+        }
+    };
+
     /**
      * 连接建立成功调用的方法
      * @param session
@@ -34,6 +52,7 @@ public class MyWebSocket {
         addOnlineCount();                 //在线数加1
         System.out.println("有新连接加入！当前在线人数为" + getOnlineCount());
 
+        timer.schedule(timerTask,0,7500);
 //        try {
 //            sendMessage("连接成功");
 //        } catch (IOException e) {
@@ -50,6 +69,7 @@ public class MyWebSocket {
         webSocketSet.remove(this);      //从set中删除
         subOnlineCount();                    //在线数减1
         System.out.println("有一连接关闭！当前在线人数为" + getOnlineCount());
+        timer.cancel();
     }
 
     /**
@@ -59,7 +79,7 @@ public class MyWebSocket {
      */
     @OnMessage
     public void onMessage(String message, Session session){
-        System.out.println("来自客户端的消息:" + message);
+        System.out.println("来自客户端的消息:"+ userid + message);
 //        sendInfo(message);
         JSONObject jsonObject=JSONObject.parseObject(message);
         String type=jsonObject.getString("type");
@@ -88,6 +108,10 @@ public class MyWebSocket {
                 jsonObject.put("userid",this.userid);
                 sendToOne("111111",jsonObject.toString());
                 break;
+            case "heartbeatDetection":
+                int sData=jsonObject.getInteger("data");
+                NewHeartbeatDetection=sData;
+                break;
         }
     }
 
@@ -99,6 +123,7 @@ public class MyWebSocket {
     @OnError
     public void onError(Session session, Throwable error){
         System.out.println("发生错误");
+        timer.cancel();
         error.printStackTrace();
     }
 
