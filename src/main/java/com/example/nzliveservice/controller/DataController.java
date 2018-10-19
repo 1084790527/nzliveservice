@@ -104,9 +104,6 @@ public class DataController {
             Util.mkdirPath(obtainDataStdentUrl+fileData+"/"+fileYear+"/"+fileSystem+"/"+fileClass+"/");
 //            System.out.println(fileClass);
             url=obtainDataStdentUrl+fileData+"/"+fileYear+"/"+fileSystem+"/"+fileClass+"/";
-
-
-
             if (!file.isEmpty()){
                 try {
                     byte[] bytes=file.getBytes();
