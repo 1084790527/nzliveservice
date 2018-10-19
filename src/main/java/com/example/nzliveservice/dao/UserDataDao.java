@@ -1,9 +1,6 @@
 package com.example.nzliveservice.dao;
 
-import com.example.nzliveservice.bean.InitiateNameRecord;
-import com.example.nzliveservice.bean.NameRecord;
-import com.example.nzliveservice.bean.Student;
-import com.example.nzliveservice.bean.Teacher;
+import com.example.nzliveservice.bean.*;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -81,4 +78,7 @@ public interface UserDataDao {
      */
     @Insert("insert into repair (userid,username,dormroom,num,data,date,schedule) values (#{userid},#{username},#{dormroom},#{num},#{data},#{date},#{schedule})")
     void setRepairData(@Param("userid") String userid,@Param("username") String username,@Param("dormroom") String dormroom,@Param("num") String num,@Param("data") String data,@Param("date") String date,@Param("schedule") int schedule);
+
+    @Select("select * from repair where userid=#{userid}")
+    List<Repair> getRepairData(@Param("userid") String userid);
 }

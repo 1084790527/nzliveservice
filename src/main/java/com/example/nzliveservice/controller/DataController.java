@@ -266,4 +266,28 @@ public class DataController {
         }
         return object;
     }
+
+
+    @RequestMapping(value = "getRepairData")
+    @ResponseBody
+    public JSONArray getRepairData(@RequestBody JSONObject jsonObject){
+        String userid = jsonObject.getString("userid");
+        List<Repair> list=userDataDao.getRepairData(userid);
+//        for (Repair repair:list){
+//            System.out.println(repair.toString());
+//        }
+        JSONArray jsonArray=new JSONArray();
+        for (Repair repair:list){
+            JSONObject object=new JSONObject();
+            object.put("userid",repair.getUserid());
+            object.put("username",repair.getUsername());
+            object.put("dormroom",repair.getDormroom());
+            object.put("num",repair.getNum());
+            object.put("data",repair.getData());
+            object.put("date",repair.getDate());
+            object.put("schedule",repair.getSchedule());
+            jsonArray.add(object);
+        }
+        return jsonArray;
+    }
 }
