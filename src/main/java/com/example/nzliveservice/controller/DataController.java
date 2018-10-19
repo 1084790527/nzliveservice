@@ -290,4 +290,42 @@ public class DataController {
         }
         return jsonArray;
     }
+
+    @RequestMapping(value = "getTeacherReview")
+    @ResponseBody
+    public JSONArray getAllTeacherReview(){
+        List<Repair> list=userDataDao.getAllTeacherReview();
+        JSONArray jsonArray=new JSONArray();
+        for (Repair repair:list){
+//            System.out.println(repair.toString());
+            JSONObject object=new JSONObject();
+            object.put("userid",repair.getUserid());
+            object.put("username",repair.getUsername());
+            object.put("dormroom",repair.getDormroom());
+            object.put("num",repair.getNum());
+            object.put("data",repair.getData());
+            object.put("date",repair.getDate());
+            object.put("schedule",repair.getSchedule());
+            jsonArray.add(object);
+        }
+        return jsonArray;
+    }
+
+    @RequestMapping(value = "updataChangeReview")
+    @ResponseBody
+    public JSONObject updataChangeReview(@RequestBody JSONObject jsonObject){
+        String userid=jsonObject.getString("userid");
+        String date=jsonObject.getString("date");
+        System.out.println(userid+":"+date);
+        JSONObject object=new JSONObject();
+        try {
+            userDataDao.updataChangeReview(userid,date);
+            object.put("status","0");
+        }catch (Exception e){
+            e.printStackTrace();
+            object.put("status","1");
+        }
+
+        return object;
+    }
 }

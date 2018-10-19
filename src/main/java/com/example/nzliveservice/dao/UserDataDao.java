@@ -1,10 +1,7 @@
 package com.example.nzliveservice.dao;
 
 import com.example.nzliveservice.bean.*;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -81,4 +78,11 @@ public interface UserDataDao {
 
     @Select("select * from repair where userid=#{userid}")
     List<Repair> getRepairData(@Param("userid") String userid);
+
+    @Select("select * from repair")
+    List<Repair> getAllTeacherReview();
+
+    @Update("update repair set schedule = 1 where userid=#{userid} and date=#{date}")
+    void updataChangeReview(@Param("userid") String userid,@Param("date") String date);
+
 }
