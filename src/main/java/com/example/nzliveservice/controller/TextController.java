@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class TextController {
 
-    @RequestMapping(value = "/")
+    @RequestMapping(value = "text")
     @ResponseBody
     public String text(){
         return "text";
@@ -40,5 +40,15 @@ public class TextController {
     @RequestMapping(value = "text1")
     public String text1(){
         return "text1";
+    }
+
+    @RequestMapping(value = "/")
+    public String login(){
+        return "login";
+    }
+
+    @RequestMapping(value = "home")
+    public String home(){
+        return "home";
     }
 }
