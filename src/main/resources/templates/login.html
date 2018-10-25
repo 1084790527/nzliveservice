@@ -73,9 +73,10 @@
             removeClass(document.querySelector(".login"), "active")
             removeClass(document.querySelector(".sk-rotating-plane"), "active")
             document.querySelector(".login").style.display = "block"
-            alert("登录成功")
-
+            // alert("登录成功")
+            $(location).attr('href',"/home");
         },5000)
+        
     }
 </script>
 </body>
