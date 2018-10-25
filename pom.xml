@@ -91,8 +91,16 @@
 			<artifactId>bitmap-library</artifactId>
 			<version>1.7.0</version>
 		</dependency>
+        <!--<dependency>-->
+            <!--<groupId>net.bytebuddy</groupId>-->
+            <!--<artifactId>byte-buddy</artifactId>-->
+        <!--</dependency>-->
+		<!--<dependency>-->
+			<!--<groupId>org.assertj</groupId>-->
+			<!--<artifactId>assertj-core</artifactId>-->
+		<!--</dependency>-->
 
-    </dependencies>
+	</dependencies>
 
 	<build>
 		<plugins>

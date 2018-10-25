@@ -74,4 +74,21 @@ public class LoginController {
             }
         }
     }
+
+    @RequestMapping(value = "wylogin")
+    @ResponseBody
+    public String wylogin(String userid,String userpwd){
+        System.out.println(userid+":"+userpwd);
+        Teacher user= userDataDao.getUserTeacherLogin(userid);
+        if (user==null){
+            //账号不存在
+            return  "0";
+        }else if (!user.getUserpwd().equals(userpwd)){
+            //密码错误
+            return  "1";
+        }else {
+            //账号密码正确
+            return "2";
+        }
+    }
 }

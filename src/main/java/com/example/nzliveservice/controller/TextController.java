@@ -3,9 +3,12 @@ package com.example.nzliveservice.controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.jws.WebParam;
 
 @Controller
 public class TextController {
@@ -48,7 +51,13 @@ public class TextController {
     }
 
     @RequestMapping(value = "home")
-    public String home(){
+    public String home(String userid, Model model){
+        System.out.println("userid:"+userid);
+        if (userid==null){
+            return "/";
+        }
+        model.addAttribute("userid",userid);
         return "home";
     }
+
 }
