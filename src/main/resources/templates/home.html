@@ -6,8 +6,115 @@
     <script src="/jquery-3.3.1.js"></script>
 </head>
 <body>
-用户：<tt th:text="${userid}"></tt>
+用户：<tt th:text="${userid}"></tt><p/>
+
+<p>下载一天的查寝记录</p>
+<select id="year" onchange="yearOnChanger()"></select>年&nbsp&nbsp&nbsp
+<select id="month" onchange="yearOnChanger()"></select>月&nbsp&nbsp&nbsp
+<select id="day"></select>日&nbsp&nbsp&nbsp
+<input type="button" value="下载" onclick="dateOnClick()">&nbsp&nbsp&nbsp
+
+<p>下载一周的查寝记录</p>
+<select id="weekYear" ></select>年&nbsp&nbsp&nbsp
+第<select id="semester"><option>1</option><option>2</option></select>学期&nbsp&nbsp&nbsp
+<select id="week"></select>周&nbsp&nbsp&nbsp
+<input type="button" value="下载" onclick="weekOnclick()">
+
+<p>下载一学期的查寝记录</p>
+<select id="weekYeart" ></select>年&nbsp&nbsp&nbsp
+第<select id="semestert"><option>1</option><option>2</option></select>学期&nbsp&nbsp&nbsp
+<input type="button" value="下载" onclick="weekSOnclick()">
 
 </body>
 
+<script type="application/javascript">
+
+    for(var i=2000;i<2022;i++){
+        $("#year").html($("#year").html()+"<option >"+i+"</option>");
+    }
+
+    for(var i=1;i<=12;i++){
+        $("#month").html($("#month").html()+"<option >"+i+"</option>");
+    }
+
+    for(var i=1;i<=31;i++){
+        $("#day").html($("#day").html()+"<option >"+i+"</option>");
+    }
+
+    function yearOnChanger() {
+        var year=$("#year").val();
+        var month=$("#month").val();
+        // alert(year+":"+month+":"+year%4);
+        if(year%4==0&&month==2){
+            for(var i=1;i<=29;i++){
+                if(i==1){
+                    $("#day").html("<option >"+i+"</option>");
+                }else {
+                    $("#day").html($("#day").html()+"<option >"+i+"</option>");
+                }
+
+            }
+        }else if(month==1||month==3||month==5||month==7||month==8||month==10||month==12){
+            for(var i=1;i<=31;i++){
+                if(i==1){
+                    $("#day").html("<option >"+i+"</option>");
+                }else {
+                    $("#day").html($("#day").html()+"<option >"+i+"</option>");
+                }
+
+            }
+        }else if(month==2){
+            for(var i=1;i<=28;i++){
+                if(i==1){
+                    $("#day").html("<option >"+i+"</option>");
+                }else {
+                    $("#day").html($("#day").html()+"<option >"+i+"</option>");
+                }
+
+            }
+        }else {
+            for(var i=1;i<=30;i++){
+                if(i==1){
+                    $("#day").html("<option >"+i+"</option>");
+                }else {
+                    $("#day").html($("#day").html()+"<option >"+i+"</option>");
+                }
+
+            }
+        }
+    }
+
+    for(var i=2000;i<2022;i++){
+        $("#weekYear").html($("#weekYear").html()+"<option >"+i+"</option>");
+    }
+
+    for(var i=2000;i<2022;i++){
+        $("#weekYeart").html($("#weekYeart").html()+"<option >"+i+"</option>");
+    }
+
+    for(var i=1;i<=25;i++){
+        $("#week").html($("#week").html()+"<option >"+i+"</option>");
+    }
+
+    function dateOnClick() {
+        var year=$("#year").val();
+        var month=$("#month").val();
+        var day=$("#day").val();
+        alert(year+":"+month+":"+day);
+    }
+
+    function weekOnclick() {
+        var weekYear=$("#weekYear").val();
+        var week=$("#week").val();
+        var semester=$("#semester").val();
+        alert(weekYear+":"+semester+":"+week);
+    }
+
+    function weekSOnclick() {
+        var weekYeart=$("#weekYeart").val();
+        var semestert=$("#semestert").val();
+        alert(weekYeart+":"+semestert);
+    }
+
+</script>
 </html>
